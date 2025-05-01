@@ -1,14 +1,18 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Sora } from "next/font/google"
 import "./globals.css"
 
-const inter = Inter({ subsets: ["latin"] })
+const sora = Sora({ 
+  subsets: ["latin"],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-sora', 
+})
 
 export const metadata: Metadata = {
-  title: "Aptify - Intelligent AI-driven Solutions",
-  description: "Transform the way enterprises work, analyze, and respond with Aptify's AI-driven solutions.",
-    generator: 'v0.dev'
+  title: "Aptify AI",
+  description: "AI-powered document assistant",
+  viewport: "width=device-width, initial-scale=1.0",
 }
 
 export default function RootLayout({
@@ -18,10 +22,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${sora.className} min-h-screen`}>
+        <main className="relative w-full min-h-screen">
+          {children}
+        </main>
+      </body>
     </html>
   )
 }
-
 
 import './globals.css'

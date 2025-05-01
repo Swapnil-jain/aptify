@@ -1,22 +1,28 @@
-import { Navbar } from "@/components/navbar"
-import { HeroSection } from "@/components/hero-section"
-import { AIAgentsSection } from "@/components/ai-agents-section"
-import { TestimonialsSection } from "@/components/testimonials-section"
-import { Footer } from "@/components/footer"
+"use client";
+import React, { useState } from "react";
+import LeftSidebar from "./components/common/LeftSidebar";
+import TopHeader from "./components/common/TopHeader";
+import RightSidebar from "./components/homepage/RightSidebar";
+import MainContent from "./components/MainContent";
 
 export default function Home() {
+  const [activeIcon, setActiveIcon] = useState(0);
 
   return (
-    <main className="min-h-screen bg-aptify-darker">
-      <Navbar />
+    <div className="w-full h-screen relative bg-[radial-gradient(ellipse_97.02%_97.02%_at_50.00%_2.98%,_#121023_0%,_black_100%)] overflow-hidden">
+      <div className="w-full h-full left-[300px] top-[708px] absolute origin-top-left -rotate-90 bg-[radial-gradient(ellipse_50.00%_50.00%_at_50.00%_50.00%,_rgba(26.33,_24,_52,_0.80)_0%,_rgba(26.33,_24,_52,_0)_100%)] rounded-full" />
 
-      <HeroSection />
+      {/* Left Sidebar */}
+      <LeftSidebar activeIcon={activeIcon} setActiveIcon={setActiveIcon} />
 
-      <AIAgentsSection />
+      {/* Right Sidebar - Only show on homepage */}
+      {activeIcon === 0 && <RightSidebar />}
 
-      <TestimonialsSection />
+      {/* Top Header */}
+      <TopHeader activeIcon={activeIcon} />
 
-      <Footer />
-    </main>
-  )
+      {/* Main Content */}
+      <MainContent activeIcon={activeIcon} />
+    </div>
+  );
 }
