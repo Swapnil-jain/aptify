@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 
-const AgentScreen: React.FC = () => {
+const RFPScreen: React.FC = () => {
   return (
     <div className="w-full h-[95vh] pt-6 pb-6 bg-gradient-to-bl from-gray-800/30 to-indigo-900/30 rounded-2xl shadow-[0px_4px_12px_0px_rgba(0,0,0,0.12)] outline outline-1 outline-offset-[-1px] outline-white/10 flex flex-col justify-start items-start gap-5 overflow-y-auto">
       <div className="self-stretch px-6 inline-flex justify-between items-center">
@@ -13,7 +13,7 @@ const AgentScreen: React.FC = () => {
             height={20}
           />
           <div className="justify-start text-500 text-base font-normal font-['Sora'] leading-snug">
-            Operations Agent
+            RFP Agent
           </div>
         </div>
         <div className="flex justify-start items-center gap-2">
@@ -69,56 +69,62 @@ const AgentScreen: React.FC = () => {
             </div>
             <div className="flex flex-col justify-start items-start gap-2">
               <div className="self-stretch text-[#FFF] text-[36px] font-normal font-['Sora'] leading-[140%]">
-                How can I assist with your contracts today?
+                How can I assist with your RFP today?
               </div>
               <div className="self-stretch text-[#C4CADA] text-base font-normal font-['Sora'] leading-[140%]">
-                Ask questions, compose drafts & explore the platform.
+                Gather information, define technical aspects, & outline the
+                project scope.
               </div>
             </div>
           </div>
           <div className="self-stretch inline-flex justify-start items-start gap-8">
             <div className="flex-1 inline-flex flex-col justify-start items-start gap-3">
               <div className="self-stretch text-[#C4CADA] text-xl font-normal font-['Sora'] leading-[140%]">
-              Ask questions
+                Gathering Information
               </div>
               <div className="self-stretch flex flex-col justify-start items-start gap-4">
                 <div className="self-stretch flex p-6 flex-col justify-center items-start gap-5 rounded-2xl border-[0.5px] border-[#6CC2F9] bg-[linear-gradient(261deg,_#3D3E7D_8.83%,_#5C58AF_117.95%)] shadow-[0px_4px_24px_0px_rgba(126,116,235,0.30)] overflow-hidden">
                   <div className="self-stretch text-white/70 text-sm font-normal font-['Sora'] leading-normal">
-                  Which of our contracts are expiring in the next 60 days?
+                    What key infrastructure aspects should be considered to
+                    achieve maximum efficiency in the data center?
                   </div>
                 </div>
                 <div className="self-stretch flex p-6 flex-col justify-center items-start gap-5 rounded-2xl border-[0.5px] border-[#6CC2F9] bg-[linear-gradient(261deg,_#3D3E7D_8.83%,_#5C58AF_117.95%)] shadow-[0px_4px_24px_0px_rgba(126,116,235,0.30)] overflow-hidden">
                   <div className="self-stretch text-white/70 text-sm font-normal font-['Sora'] leading-normal">
-                  Which contracts have non-standard escalation procedures?
+                    How can we ensure optimal energy efficiency and minimal
+                    environmental impact in the data center?
                   </div>
                 </div>
               </div>
             </div>
             <div className="flex-1 inline-flex flex-col justify-start items-start gap-3">
               <div className="self-stretch text-[#C4CADA] text-xl font-normal font-['Sora'] leading-[140%]">
-              Synthesize Knowledge
+                Defining Technical Aspects
               </div>
               <div className="self-stretch flex flex-col justify-start items-start gap-4">
                 <div className="self-stretch flex p-6 flex-col justify-center items-start gap-5 rounded-2xl border-[0.5px] border-[#6CC2F9] bg-[linear-gradient(261deg,_#3D3E7D_8.83%,_#5C58AF_117.95%)] shadow-[0px_4px_24px_0px_rgba(126,116,235,0.30)] overflow-hidden">
                   <div className="self-stretch text-white/70 text-sm font-normal font-['Sora'] leading-normal">
-                  Identify patterns or anomalies across our infrastructure contracts. Are there providers with unusually strict SLAs or non-standard penalty terms?
+                    Design the data center with future growth and technological
+                    advancements in mind to ensure long-term adaptability.
                   </div>
                 </div>
               </div>
             </div>
             <div className="flex-1 inline-flex flex-col justify-start items-start gap-3">
               <div className="self-stretch text-[#C4CADA] text-xl font-normal font-['Sora'] leading-[140%]">
-              Discover Platform
+                Defining Project Scope
               </div>
               <div className="self-stretch flex flex-col justify-start items-start gap-4">
                 <div className="self-stretch flex p-6 flex-col justify-center items-start gap-5 rounded-2xl border-[0.5px] border-[#6CC2F9] bg-[linear-gradient(261deg,_#3D3E7D_8.83%,_#5C58AF_117.95%)] shadow-[0px_4px_24px_0px_rgba(126,116,235,0.30)] overflow-hidden">
                   <div className="self-stretch text-white/70 text-sm font-normal font-['Sora'] leading-normal">
-                  Which Aptify tools can help me improve contract lifecycle visibility and automate manual tasks?
+                    Clarify the expected timelines for project completion and
+                    key phases, including deadlines for proposal submissions.
                   </div>
                 </div>
                 <div className="self-stretch flex p-6 flex-col justify-center items-start gap-5 rounded-2xl border-[0.5px] border-[#6CC2F9] bg-[linear-gradient(261deg,_#3D3E7D_8.83%,_#5C58AF_117.95%)] shadow-[0px_4px_24px_0px_rgba(126,116,235,0.30)] overflow-hidden">
                   <div className="self-stretch text-white/70 text-sm font-normal font-['Sora'] leading-normal">
-                    Develop mitigation plans and contingency procedures.
+                    Describe the evaluation criteria for vendor proposals,
+                    focusing on quality, cost, and timeline.
                   </div>
                 </div>
               </div>
@@ -128,7 +134,7 @@ const AgentScreen: React.FC = () => {
             <div className="flex justify-start items-center gap-2 w-full">
               <input
                 type="text"
-                placeholder="Ask me about operations..."
+                placeholder="Ask me about RFPs..."
                 className="bg-transparent outline-none text-[#99A1B7] text-base font-normal font-['Sora'] leading-[110%] w-full focus:text-white"
               />
             </div>
@@ -139,4 +145,4 @@ const AgentScreen: React.FC = () => {
   );
 };
 
-export default AgentScreen; 
+export default RFPScreen;

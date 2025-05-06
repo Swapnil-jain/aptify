@@ -171,128 +171,131 @@ const KnowledgeLibrary: React.FC = () => {
   };
 
   return (
-    <div className="w-[calc(100vw-7.2rem)] ml-[-2.5rem] mt-[-12.4rem] h-[calc(100vh-4rem)]">
-      <div className="flex flex-row h-full w-full">
-        {/* Knowledge Library sidebar */}
-        <div className="w-[30%] px-10 pt-10 border-r border-white/10 flex flex-col items-start gap-6 overflow-auto h-full">
-          <div className="text-white text-2xl font-normal font-['Sora'] leading-[140%] self-stretch">
-            Knowledge Library
+    <div className="flex items-start justify-between gap-6 pt-1 w-full overflow-visible">
+      {/* Knowledge Library sidebar */}
+      <div className="w-[calc(33.333%-1rem)] inline-flex h-[95vh] py-6 pb-[72px] flex-col items-start gap-16 flex-shrink-0 bg-gradient-to-bl from-gray-800/30 to-indigo-900/30 rounded-2xl shadow-[0px_4px_12px_0px_rgba(0,0,0,0.12)] outline outline-1 outline-offset-[-1px] outline-white/10 overflow-y-auto">
+        <div className="self-stretch px-6 inline-flex justify-between items-center">
+            <div className="self-stretch justify-start text-0 text-2xl font-normal font-['Sora'] leading-loose">Knowledge Library</div>
+        </div>
+
+        <div className="self-stretch flex flex-col justify-start items-start gap-6 px-6">
+          {/* Contract Agent section */}
+          <div className="self-stretch p-4 bg-slate-200/5 rounded-2xl outline outline-1 outline-white/10 flex flex-col justify-center items-start gap-3">
+            <div 
+              className="self-stretch inline-flex justify-between items-center cursor-pointer"
+              onClick={() => toggleSection('contractAgent')}
+            >
+              <div className="text-[#C4CADA] text-lg font-normal font-['Sora'] leading-[140%]">
+                Contract Agent
+              </div>
+              <Image 
+                src={expandedSections.contractAgent ? "/knowledge-library/arrow-down.svg" : "/knowledge-library/arrow-up.svg"}
+                alt={expandedSections.contractAgent ? "Collapse" : "Expand"} 
+                width={24} 
+                height={24} 
+              />
+            </div>
+            {expandedSections.contractAgent && (
+              <DocumentList
+                documents={documents}
+                category="contractAgent"
+                loading={loading}
+                selectedDocument={selectedDocument}
+                onDocumentClick={handleDocumentClick}
+                onDeleteDocument={handleDeleteDocument}
+              />
+            )}
           </div>
-          <div className="self-stretch flex flex-col justify-start items-start gap-6">
-            {/* Contract Agent section */}
-            <div className="self-stretch p-4 bg-slate-200/5 rounded-2xl outline outline-1 outline-white/10 flex flex-col justify-center items-start gap-3">
-              <div 
-                className="self-stretch inline-flex justify-between items-center cursor-pointer"
-                onClick={() => toggleSection('contractAgent')}
-              >
-                <div className="text-[#C4CADA] text-lg font-normal font-['Sora'] leading-[140%]">
-                  Contract Agent
-                </div>
-                <Image 
-                  src={expandedSections.contractAgent ? "/knowledge-library/arrow-down.svg" : "/knowledge-library/arrow-up.svg"}
-                  alt={expandedSections.contractAgent ? "Collapse" : "Expand"} 
-                  width={24} 
-                  height={24} 
-                />
+          
+          {/* RFP Agent section */}
+          <div className="self-stretch p-4 bg-slate-200/5 rounded-2xl outline outline-1 outline-white/10 flex flex-col justify-center items-start gap-3">
+            <div 
+              className="self-stretch inline-flex justify-between items-center cursor-pointer"
+              onClick={() => toggleSection('rfpAgent')}
+            >
+              <div className="text-[#C4CADA] text-lg font-normal font-['Sora'] leading-[140%]">
+                RFP Agent
               </div>
-              {expandedSections.contractAgent && (
-                <DocumentList
-                  documents={documents}
-                  category="contractAgent"
-                  loading={loading}
-                  selectedDocument={selectedDocument}
-                  onDocumentClick={handleDocumentClick}
-                  onDeleteDocument={handleDeleteDocument}
-                />
-              )}
+              <Image 
+                src={expandedSections.rfpAgent ? "/knowledge-library/arrow-down.svg" : "/knowledge-library/arrow-up.svg"}
+                alt={expandedSections.rfpAgent ? "Collapse" : "Expand"} 
+                width={24} 
+                height={24} 
+              />
             </div>
-            
-            {/* RFP Agent section */}
-            <div className="self-stretch p-4 bg-slate-200/5 rounded-2xl outline outline-1 outline-white/10 flex flex-col justify-center items-start gap-3">
-              <div 
-                className="self-stretch inline-flex justify-between items-center cursor-pointer"
-                onClick={() => toggleSection('rfpAgent')}
-              >
-                <div className="text-[#C4CADA] text-lg font-normal font-['Sora'] leading-[140%]">
-                  RFP Agent
-                </div>
-                <Image 
-                  src={expandedSections.rfpAgent ? "/knowledge-library/arrow-down.svg" : "/knowledge-library/arrow-up.svg"}
-                  alt={expandedSections.rfpAgent ? "Collapse" : "Expand"} 
-                  width={24} 
-                  height={24} 
-                />
+            {expandedSections.rfpAgent && (
+              <DocumentList
+                documents={documents}
+                category="rfpAgent"
+                loading={loading}
+                selectedDocument={selectedDocument}
+                onDocumentClick={handleDocumentClick}
+                onDeleteDocument={handleDeleteDocument}
+              />
+            )}
+          </div>
+          
+          {/* Operations section */}
+          <div className="self-stretch p-4 bg-slate-200/5 rounded-2xl outline outline-1 outline-white/10 flex flex-col justify-center items-start gap-3">
+            <div 
+              className="self-stretch inline-flex justify-between items-center cursor-pointer"
+              onClick={() => toggleSection('operations')}
+            >
+              <div className="text-[#C4CADA] text-lg font-normal font-['Sora'] leading-[140%]">
+                Operations
               </div>
-              {expandedSections.rfpAgent && (
-                <DocumentList
-                  documents={documents}
-                  category="rfpAgent"
-                  loading={loading}
-                  selectedDocument={selectedDocument}
-                  onDocumentClick={handleDocumentClick}
-                  onDeleteDocument={handleDeleteDocument}
-                />
-              )}
+              <Image 
+                src={expandedSections.operations ? "/knowledge-library/arrow-down.svg" : "/knowledge-library/arrow-up.svg"}
+                alt={expandedSections.operations ? "Collapse" : "Expand"} 
+                width={24} 
+                height={24} 
+              />
             </div>
-            
-            {/* Operations section */}
-            <div className="self-stretch p-4 bg-slate-200/5 rounded-2xl outline outline-1 outline-white/10 flex flex-col justify-center items-start gap-3">
-              <div 
-                className="self-stretch inline-flex justify-between items-center cursor-pointer"
-                onClick={() => toggleSection('operations')}
-              >
-                <div className="text-[#C4CADA] text-lg font-normal font-['Sora'] leading-[140%]">
-                  Operations
-                </div>
-                <Image 
-                  src={expandedSections.operations ? "/knowledge-library/arrow-down.svg" : "/knowledge-library/arrow-up.svg"}
-                  alt={expandedSections.operations ? "Collapse" : "Expand"} 
-                  width={24} 
-                  height={24} 
-                />
-              </div>
-              {expandedSections.operations && (
-                <DocumentList
-                  documents={documents}
-                  category="operations"
-                  loading={loading}
-                  selectedDocument={selectedDocument}
-                  onDocumentClick={handleDocumentClick}
-                  onDeleteDocument={handleDeleteDocument}
-                />
-              )}
-            </div>
+            {expandedSections.operations && (
+              <DocumentList
+                documents={documents}
+                category="operations"
+                loading={loading}
+                selectedDocument={selectedDocument}
+                onDocumentClick={handleDocumentClick}
+                onDeleteDocument={handleDeleteDocument}
+              />
+            )}
           </div>
         </div>
-        
-        {/* Document preview section */}
-        <div className="flex-1 px-10 pt-10 border-r border-white/10 flex flex-col justify-start items-start gap-8 overflow-auto h-full">
-          {selectedDocument ? (
-            <>
-              <div className="self-stretch flex flex-col justify-start items-start gap-2">
-                <div className="self-stretch justify-start text-0 text-2xl font-normal font-['Sora'] leading-loose mb-[-1rem]">
-                  {selectedDocument.category === 'contractAgent' ? 'Contract Agent' : 
-                   selectedDocument.category === 'rfpAgent' ? 'RFP Agent' : 'Operations'}
-                </div>
+      </div>
+      
+      {/* Document preview section */}
+      <div className="w-[calc(33.333%-1rem)] inline-flex h-[95vh] py-6 pb-[72px] flex-col items-start gap-16 flex-shrink-0 bg-gradient-to-bl from-gray-800/30 to-indigo-900/30 rounded-2xl shadow-[0px_4px_12px_0px_rgba(0,0,0,0.12)] outline outline-1 outline-offset-[-1px] outline-white/10 overflow-y-auto">
+        {selectedDocument ? (
+          <>
+            <div className="self-stretch px-6 flex flex-col justify-start items-start gap-2">
+              <div className="self-stretch justify-start text-0 text-2xl font-normal font-['Sora'] leading-loose mb-[-1rem]">
+                {selectedDocument.category === 'contractAgent' ? 'Contract Agent' : 
+                 selectedDocument.category === 'rfpAgent' ? 'RFP Agent' : 'Operations'}
               </div>
+            </div>
+            <div className="px-6 w-full">
               <PDFViewer
                 selectedDocument={selectedDocument}
                 pdfUrl={pdfUrl}
                 pdfLoading={pdfLoading}
                 pdfError={pdfError}
               />
-            </>
-          ) : (
-            <div className="self-stretch flex justify-center items-center h-full">
-              <div className="text-white/50 text-lg font-normal font-['Sora']">
-                Select a document to view
-              </div>
             </div>
-          )}
-        </div>
-        
-        {/* AI Chat section */}
-        <div className="w-[30%] p-10 flex flex-col h-full overflow-auto">
+          </>
+        ) : (
+          <div className="self-stretch px-6 flex justify-center items-center h-full">
+            <div className="text-white/50 text-lg font-normal font-['Sora']">
+              Select a document to view
+            </div>
+          </div>
+        )}
+      </div>
+      
+      {/* AI Chat section */}
+      <div className="w-[calc(33.333%-1rem)] inline-flex h-[95vh] py-6 pb-[72px] flex-col items-start gap-16 flex-shrink-0 bg-gradient-to-bl from-gray-800/30 to-indigo-900/30 rounded-2xl shadow-[0px_4px_12px_0px_rgba(0,0,0,0.12)] outline outline-1 outline-offset-[-1px] outline-white/10 overflow-y-auto">
+        <div className="px-6 w-full">
           <DocumentChat selectedDocument={selectedDocument} />
         </div>
       </div>

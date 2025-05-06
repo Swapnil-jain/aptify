@@ -153,7 +153,7 @@ const DocumentChat: React.FC<DocumentChatProps> = ({
           ) : (
             <div className="text-white/40 text-sm text-center py-8">
               {selectedDocument 
-                ? `Ask me anything about "${selectedDocument.file_name}"`
+                ? `Ask me anything about ${selectedDocument.file_name}`
                 : "Select a document to start chatting"}
             </div>
           )}
@@ -179,27 +179,34 @@ const DocumentChat: React.FC<DocumentChatProps> = ({
           <div className="w-full px-4 py-4 bg-[rgba(255,255,255,0.02)] rounded-md border border-[#6CC2F9] inline-flex justify-start items-center gap-2">
             <div className="flex justify-start items-center gap-2 w-full">
               <div className="w-[20px] h-[20px] relative flex justify-center items-center aspect-square">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z" stroke="white" strokeOpacity="0.6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M22 22L20 20" stroke="white" strokeOpacity="0.6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+                <Image
+                  src="/search-normal.svg"
+                  alt="Search"
+                  width={20}
+                  height={20}
+                />
               </div>
               <input
                 type="text"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 placeholder={selectedDocument ? "Ask about this document..." : "Select a document first..."}
-                className="bg-transparent outline-none text-[#99A1B7] text-base font-normal font-['Sora'] leading-[110%] w-full"
+                className="bg-transparent outline-none w-full"
                 disabled={!selectedDocument || isAiTyping}
+                style={{
+                  color: inputValue ? "#FFFFFF" : "#5C657F",
+                  fontFamily: "Sora",
+                  fontSize: "16px",
+                  fontStyle: "normal",
+                  fontWeight: "400",
+                  lineHeight: "110%"
+                }}
               />
               <button 
                 type="submit"
                 className={`${inputValue.trim() && selectedDocument ? 'opacity-100' : 'opacity-50'} transition-opacity`}
                 disabled={!inputValue.trim() || !selectedDocument || isAiTyping}
               >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M22 2L11 13M22 2L15 22L11 13M11 13L2 9L22 2" stroke="#6CC2F9" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
               </button>
             </div>
           </div>

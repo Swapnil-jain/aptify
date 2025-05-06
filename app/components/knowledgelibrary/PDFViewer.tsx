@@ -33,7 +33,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({
       </div>
       
       {/* PDF Content */}
-      <div className="relative w-full h-[38vw] bg-gradient-to-br from-neutral-900/80 to-neutral-800/50 rounded-lg overflow-hidden border border-white/10">
+      <div className="relative w-full h-[calc(75vh-6rem)] bg-gradient-to-br from-neutral-900/80 to-neutral-800/50 rounded-lg overflow-hidden border border-white/10">
         {isPdf ? (
           <>
             {/* PDF Viewer */}

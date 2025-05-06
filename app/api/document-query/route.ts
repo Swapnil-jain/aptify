@@ -59,7 +59,7 @@ export async function POST(request: Request) {
 
     // Use the document content to generate a response
     const completion = await openai.chat.completions.create({
-      model: process.env.CHAT_MODEL || 'gpt-4o-mini',
+      model: process.env.MODEL_NAME || 'gpt-4o-mini',
       messages: [
         {
           role: 'system',

@@ -24,7 +24,7 @@ export function WelcomeModal({ isOpen = true, onClose }: WelcomeModalProps) {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 p-4">
+    <div className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-md z-50 p-4">
       <div className="p-[1px] rounded-xl max-w-[580px] w-full relative">
         {/* Gradient border */}
         <div className="absolute inset-0 rounded-xl" style={{
