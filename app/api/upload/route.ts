@@ -3,7 +3,6 @@ import { createClient } from '@supabase/supabase-js';
 import { OpenAI } from 'openai';
 import { insertDocumentWithCategory } from '@/lib/vector';
 import pdfParse from 'pdf-parse';
-import Tesseract from 'tesseract.js';
 
 // Initialize OpenAI client
 const openai = new OpenAI({

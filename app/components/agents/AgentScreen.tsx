@@ -13,7 +13,7 @@ const AgentScreen: React.FC = () => {
             height={20}
           />
           <div className="justify-start text-500 text-base font-normal font-['Sora'] leading-snug">
-            Operations Agent
+            Contracts Agent
           </div>
         </div>
         <div className="flex justify-start items-center gap-2">
@@ -128,7 +128,7 @@ const AgentScreen: React.FC = () => {
             <div className="flex justify-start items-center gap-2 w-full">
               <input
                 type="text"
-                placeholder="Ask me about operations..."
+                placeholder="Ask me about contracts..."
                 className="bg-transparent outline-none text-[#99A1B7] text-base font-normal font-['Sora'] leading-[110%] w-full focus:text-white"
               />
             </div>
