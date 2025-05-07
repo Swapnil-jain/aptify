@@ -28,3 +28,9 @@ next-env.d.ts
 .cursor
 todo.txt
 .clerk
+
+# firebase
+.firebase/
+firebase-debug.log
+firebase-debug.*.log
+.runtimeconfig.json

@@ -29,27 +29,3 @@ export async function GET() {
     );
   }
 }
-
-// export async function POST(request: Request) {
-//   try {
-//     const { category } = await request.json();
-    
-//     if (!category) {
-//       return NextResponse.json(
-//         { error: 'Category is required' }, 
-//         { status: 400 }
-//       );
-//     }
-    
-//     // You could add more functionality here, like creating placeholder documents
-    
-//     return NextResponse.json({ success: true });
-    
-//   } catch (error) {
-//     console.error('Error in POST:', error);
-//     return NextResponse.json(
-//       { error: 'Failed to process request' }, 
-//       { status: 500 }
-//     );
-//   }
-// } 
