@@ -1,4 +1,3 @@
-"use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { WelcomeModal } from "./WelcomeModal";
@@ -8,19 +7,39 @@ interface HomeScreenProps {
 }
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ setActiveIcon }) => {
-  const [showWelcomeModal, setShowWelcomeModal] = useState(true);
+  const [showWelcomeModal, setShowWelcomeModal] = useState(false);
   const [showSidebarHint, setShowSidebarHint] = useState(false);
+  const [hintAnimationComplete, setHintAnimationComplete] = useState(false);
+
+  useEffect(() => {
+    // Check localStorage to determine if welcome modal should be shown
+    const hasSeenWelcome = localStorage.getItem('aptify_has_seen_welcome') === 'true';
+    const hasSeenHint = localStorage.getItem('aptify_has_seen_hint') === 'true';
+    
+    setShowWelcomeModal(!hasSeenWelcome);
+    setHintAnimationComplete(hasSeenHint);
+  }, []);
 
   useEffect(() => {
     // Show the sidebar hint animation after a short delay when the welcome modal is closed
-    if (!showWelcomeModal) {
+    if (!showWelcomeModal && !hintAnimationComplete) {
       const timer = setTimeout(() => {
         setShowSidebarHint(true);
+        
+        // Set a timer to mark the animation as complete after 6 seconds (animation duration)
+        const animationTimer = setTimeout(() => {
+          setShowSidebarHint(false);
+          setHintAnimationComplete(true);
+          // Store in localStorage that the hint has been shown
+          localStorage.setItem('aptify_has_seen_hint', 'true');
+        }, 6000);
+        
+        return () => clearTimeout(animationTimer);
       }, 1000);
       
       return () => clearTimeout(timer);
     }
-  }, [showWelcomeModal]);
+  }, [showWelcomeModal, hintAnimationComplete]);
 
   // Calculate the position for the hint
   useEffect(() => {
@@ -49,6 +68,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ setActiveIcon }) => {
 
   const handleCloseModal = () => {
     setShowWelcomeModal(false);
+    // Store in localStorage that the welcome modal has been shown
+    localStorage.setItem('aptify_has_seen_welcome', 'true');
   };
 
   const handleSidebarHintClick = () => {
@@ -57,6 +78,9 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ setActiveIcon }) => {
       setActiveIcon(1);
     }
     setShowSidebarHint(false);
+    setHintAnimationComplete(true);
+    // Store in localStorage that the hint has been shown
+    localStorage.setItem('aptify_has_seen_hint', 'true');
   };
 
   return (
@@ -68,8 +92,14 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ setActiveIcon }) => {
         <div 
           id="sidebar-hint"
           className="fixed left-[80px] top-1/2 z-50 cursor-pointer" 
-          style={{ animation: "sidebar-hint 4s ease-in-out" }}
+          style={{ animation: "sidebar-hint 6s ease-in-out forwards" }}
           onClick={handleSidebarHintClick}
+          onAnimationEnd={() => {
+            setShowSidebarHint(false);
+            setHintAnimationComplete(true);
+            // Store in localStorage that the hint has been shown
+            localStorage.setItem('aptify_has_seen_hint', 'true');
+          }}
         >
           <div className="relative">
             <div className="absolute left-[-36px] top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-gradient-to-br from-indigo-400/30 to-sky-300/30 animate-pulse" />

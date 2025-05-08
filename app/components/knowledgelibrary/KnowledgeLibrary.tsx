@@ -294,8 +294,8 @@ const KnowledgeLibrary: React.FC = () => {
       </div>
       
       {/* AI Chat section */}
-      <div className="w-[calc(33.333%-1rem)] inline-flex h-[95vh] py-6 pb-[72px] flex-col items-start gap-16 flex-shrink-0 bg-gradient-to-bl from-gray-800/30 to-indigo-900/30 rounded-2xl shadow-[0px_4px_12px_0px_rgba(0,0,0,0.12)] outline outline-1 outline-offset-[-1px] outline-white/10 overflow-y-auto">
-        <div className="px-6 w-full">
+      <div className="w-[calc(33.333%-1rem)] inline-flex h-[95vh] py-6 pb-[3vh] flex-col items-start gap-16 flex-shrink-0 bg-gradient-to-bl from-gray-800/30 to-indigo-900/30 rounded-2xl shadow-[0px_4px_12px_0px_rgba(0,0,0,0.12)] outline outline-1 outline-offset-[-1px] outline-white/10 overflow-hidden relative">
+        <div className="px-6 w-full h-full">
           <DocumentChat selectedDocument={selectedDocument} />
         </div>
       </div>

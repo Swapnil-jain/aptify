@@ -33,44 +33,63 @@ export async function POST(request: Request) {
 
     console.log(`Processing query for document ${documentId}:`, query);
 
-    // Fetch the specific document content from Supabase
-    const { data: document, error: documentError } = await supabaseAdmin
+    // Generate embedding for the query
+    const embeddingResponse = await openai.embeddings.create({
+      model: process.env.EMBED_MODEL || 'text-embedding-3-small',
+      input: query,
+    });
+    const queryEmbedding = embeddingResponse.data[0].embedding;
+    
+    // Query the database using the match_documents function with document ID filter
+    const { data: matches, error } = await supabaseAdmin.rpc('match_documents', {
+      query_embedding: queryEmbedding,
+      match_count: 5,
+      min_similarity: 0.2,
+      document_id_filter: documentId
+    });
+
+    if (error) {
+      console.error('Database error:', error);
+      throw error;
+    }
+
+    // Fetch the document name for reference
+    const { data: documentInfo, error: documentError } = await supabaseAdmin
       .from('documents')
-      .select('content, file_name, id')
+      .select('file_name')
       .eq('id', documentId)
       .single();
 
     if (documentError) {
-      console.error('Error fetching document:', documentError);
-      return NextResponse.json(
-        { error: 'Failed to retrieve document content' },
-        { status: 500 }
-      );
+      console.error('Error fetching document info:', documentError);
     }
 
-    if (!document) {
-      return NextResponse.json(
-        { error: 'Document not found' },
-        { status: 404 }
-      );
+    console.log('Number of matches found:', matches?.length || 0);
+
+    if (!matches || matches.length === 0) {
+      return NextResponse.json({
+        answer: "I couldn't find any relevant information in this document related to your query.",
+        documentId,
+        documentName: documentInfo?.file_name || 'Unknown'
+      });
     }
 
-    console.log(`Found document: ${document.file_name}`);
-
-    // Use the document content to generate a response
+    // Use the matches to generate a response
+    const context = matches.map((match: any) => match.document_content).join('\n\n');
+    
     const completion = await openai.chat.completions.create({
       model: process.env.MODEL_NAME || 'gpt-4o-mini',
       messages: [
         {
           role: 'system',
-          content: `You are a helpful assistant that answers questions based on the provided PDF document content.
+          content: `You are a helpful assistant that answers questions based on the provided document content.
             Only answer questions based on the information in the document.
             If the document doesn't contain information to answer the question, say so politely.
-            The document content is from: "${document.file_name}"`
+            The document content is from: "${documentInfo?.file_name || 'the requested document'}"`
         },
         {
           role: 'user',
-          content: `Document content: ${document.content}\n\nQuestion: ${query}`
+          content: `Context: ${context}\n\nQuestion: ${query}`
         }
       ],
       temperature: 0.7,
@@ -81,8 +100,8 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       answer,
-      documentId: document.id,
-      documentName: document.file_name
+      documentId,
+      documentName: documentInfo?.file_name || 'Unknown'
     });
   } catch (error) {
     console.error('Document query error:', error);

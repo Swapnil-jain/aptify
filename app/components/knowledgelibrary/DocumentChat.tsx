@@ -81,16 +81,24 @@ const DocumentChat: React.FC<DocumentChatProps> = ({
   };
 
   return (
-    <div className="w-full flex flex-col justify-between h-full">
+    <div className="w-full h-full flex flex-col relative">
       <div className="self-stretch justify-start text-0 text-2xl font-normal font-['Sora'] leading-loose mb-8">
         AI Chat
       </div>
 
-      {/* Chat messages */}
-      <div className="flex-1 overflow-auto mb-6">
-        <div className="flex flex-col gap-6">
-          {messages.length > 0 ? (
-            messages.map((message, index) => (
+      {/* Chat messages - scrollable area */}
+      <div className="flex-1 overflow-y-auto overflow-x-hidden pb-20 pr-2 scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent">
+        {messages.length === 0 ? (
+          <div className="flex flex-col justify-center items-center h-full">
+            <div className="text-white/40 text-sm text-center">
+              {selectedDocument 
+                ? `Ask me anything about ${selectedDocument.file_name}`
+                : "Select a document first..."}
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-col gap-6 pb-6">
+            {messages.map((message, index) => (
               <div key={index} className="self-stretch inline-flex justify-start items-end gap-3">
                 {message.isUser ? (
                   <>
@@ -149,69 +157,115 @@ const DocumentChat: React.FC<DocumentChatProps> = ({
                   </>
                 )}
               </div>
-            ))
-          ) : (
-            <div className="text-white/40 text-sm text-center py-8">
-              {selectedDocument 
-                ? `Ask me anything about ${selectedDocument.file_name}`
-                : "Select a document to start chatting"}
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Chat input */}
-      <div className="self-stretch mt-auto">
+            ))}
+          </div>
+        )}
+        
+        {/* AI typing indicator */}
         {isAiTyping && (
-          <div className="flex justify-center items-center mb-4">
-            <div className="inline-flex justify-center items-center">
-              <div className="w-3.5 h-3.5 relative overflow-hidden">
-                <div className="w-2 h-2 left-[11.81px] top-[12.43px] absolute origin-top-left rotate-180 rounded-full border border-gray-900" />
+          <div className="flex items-center gap-2 mb-4">
+            <div className="w-10 h-10 relative flex-shrink-0">
+              <div className="w-8 h-8 left-[4px] top-[4.26px] absolute flex items-center justify-center overflow-hidden">
+                <Image
+                  src="/sidebar/logo.svg"
+                  alt="AI"
+                  width={32}
+                  height={32}
+                />
               </div>
-              <div className="justify-center text-white/70 text-[10px] font-light font-['Sora'] leading-3">
-                Analyzing document content...
+            </div>
+            <div className="px-5 py-3 bg-[linear-gradient(205deg,_#3D3E7D_0%,_#5C58AF_100%)] rounded-tl-xl rounded-tr-xl rounded-br-xl rounded-bl-[2px] flex items-center">
+              <div className="flex items-center gap-2">
+                <div className="w-2.5 h-2.5 rounded-full bg-[linear-gradient(324deg,_#7E74EB_0%,_#5C58AF_100%)] animate-pulse"></div>
+                <div className="w-2.5 h-2.5 rounded-full bg-[linear-gradient(324deg,_#7E74EB_0%,_#5C58AF_100%)] animate-pulse delay-100"></div>
+                <div className="w-2.5 h-2.5 rounded-full bg-[linear-gradient(324deg,_#7E74EB_0%,_#5C58AF_100%)] animate-pulse delay-200"></div>
               </div>
             </div>
           </div>
         )}
-        
-        <form onSubmit={handleChatSubmit} className="w-full">
-          <div className="w-full px-4 py-4 bg-[rgba(255,255,255,0.02)] rounded-md border border-[#6CC2F9] inline-flex justify-start items-center gap-2">
-            <div className="flex justify-start items-center gap-2 w-full">
-              <div className="w-[20px] h-[20px] relative flex justify-center items-center aspect-square">
-                <Image
-                  src="/search-normal.svg"
-                  alt="Search"
-                  width={20}
-                  height={20}
-                />
-              </div>
-              <input
-                type="text"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                placeholder={selectedDocument ? "Ask about this document..." : "Select a document first..."}
-                className="bg-transparent outline-none w-full"
-                disabled={!selectedDocument || isAiTyping}
-                style={{
-                  color: inputValue ? "#FFFFFF" : "#5C657F",
-                  fontFamily: "Sora",
-                  fontSize: "16px",
-                  fontStyle: "normal",
-                  fontWeight: "400",
-                  lineHeight: "110%"
-                }}
+      </div>
+
+      {/* Chat input - fixed at bottom */}
+      <div className="absolute bottom-0 left-0 right-0 bg-[rgba(15,15,25,0.8)] pt-2 pb-0 backdrop-blur-sm z-10">
+        <form onSubmit={handleChatSubmit}>
+          <div className="w-full h-[60px] px-4 bg-[rgba(255,255,255,0.02)] rounded-md border border-[#6CC2F9] flex items-center">
+            <div className="w-[20px] h-[20px] relative flex justify-center items-center aspect-square flex-shrink-0">
+              <Image
+                src="/search-normal.svg"
+                alt="Search"
+                width={20}
+                height={20}
               />
+            </div>
+            <input
+              type="text"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              placeholder={selectedDocument ? "Ask about this document..." : "Select a document first..."}
+              className="bg-transparent outline-none w-full mx-2 h-[40px]"
+              disabled={!selectedDocument || isAiTyping}
+              style={{
+                color: inputValue ? "#FFFFFF" : "#5C657F",
+                fontFamily: "Sora",
+                fontSize: "16px",
+                fontStyle: "normal",
+                fontWeight: "400",
+                lineHeight: "110%"
+              }}
+            />
+            {inputValue.trim() && selectedDocument && (
               <button 
                 type="submit"
-                className={`${inputValue.trim() && selectedDocument ? 'opacity-100' : 'opacity-50'} transition-opacity`}
+                className="bg-[#6CC2F9] text-black rounded-md px-3 py-1 text-sm font-medium h-[36px] flex-shrink-0"
                 disabled={!inputValue.trim() || !selectedDocument || isAiTyping}
               >
+                Send
               </button>
-            </div>
+            )}
           </div>
         </form>
       </div>
+      
+      <style jsx>{`
+        @keyframes pulse {
+          0%, 100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.5;
+          }
+        }
+        
+        .animate-pulse {
+          animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        .delay-100 {
+          animation-delay: 0.3s;
+        }
+        
+        .delay-200 {
+          animation-delay: 0.6s;
+        }
+        
+        /* Custom scrollbar styles */
+        .scrollbar-thin::-webkit-scrollbar {
+          width: 6px;
+        }
+        
+        .scrollbar-thin::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+          background-color: rgba(156, 163, 175, 0.3);
+          border-radius: 3px;
+        }
+        
+        .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+          background-color: rgba(156, 163, 175, 0.5);
+        }
+      `}</style>
     </div>
   );
 };
