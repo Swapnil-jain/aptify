@@ -10,11 +10,10 @@ const supabaseAdmin = createClient(
 // Get a specific document for preview purposes
 export async function GET(
   request: Request,
-  { params }: { params: { documentId: string } }
+  { params }: { params: Promise<{ documentId: string }> }
 ) {
   try {
-    // Fix for Next.js warning - destructure and await params
-    const { documentId } = params;
+    const { documentId } = await params;
     console.log(`Fetching document with ID: ${documentId}`);
     
     if (!documentId) {
